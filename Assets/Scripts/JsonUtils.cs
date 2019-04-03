@@ -15,9 +15,9 @@ public class JsonUtils : MonoBehaviour
         DefaultElements = new ElementsList();
         jsonFilePath = Application.persistentDataPath + "/" + fileName;
         Debug.Log(jsonFilePath);
-        SaveData();
+       // SaveData();
     }
-    private void SaveData()
+    public void SaveData()
     {
         string contents = JsonUtility.ToJson(DefaultElements, true);
         File.WriteAllText(jsonFilePath, contents);

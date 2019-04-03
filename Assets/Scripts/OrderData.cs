@@ -10,20 +10,21 @@ public class OrderData
 [Serializable]
 public class ElementsList
 {
-    public List<Item> ElementList;
-    public List<Elements> ElementsOrder;
+    public List<Order> ElementsOrder;
 }
 
 [Serializable]
-public class Item
+public class Product
 {
-    public int IdItem;
-    public int ItemQuantity;
-    public string ItemName;
+    public int IdProduct;
+    public int ProductQuantity;
+    public string ProductName;
+    
 }
 [Serializable]
-public class Elements
+public class Order
 {
-    public int Order;
+    public int OrderId;
     public string ClientName;
+    public List<Product> OrderElements;
 }
