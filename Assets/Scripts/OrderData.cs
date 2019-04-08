@@ -4,22 +4,22 @@ using System.Collections.Generic;
 [Serializable]
 public class OrderData
 {
-    public ElementsList ManagementOrders;
-}
-
-[Serializable]
-public class ElementsList
-{
     public List<Order> ElementsOrder;
+    public List<Product> ProductList;
 }
 
 [Serializable]
-public class Product
+public class Product : IDataTypeHelper
 {
     public int IdProduct;
     public int ProductQuantity;
     public string ProductName;
-    
+
+    public int ID => IdProduct;
+
+    public string Name => ProductName;
+
+    public override string ToString() => "ID: " + IdProduct + " - Name:  " + ProductName + "  - Quantity:  " + ProductQuantity;
 }
 [Serializable]
 public class Order

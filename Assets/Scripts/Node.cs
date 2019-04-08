@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node 
+class Node<T> where T : IDataTypeHelper
 {
-    public int key;
-    public Node left;
-    public Node right;
-    
-
-    public Node(int item)
+    public T value;
+    public Node<T> left;
+    public Node<T> right;
+    public Node(T val)
     {
-        key = item;
+        value = val;
         left = null;
         right = null;
     }
-    public void DisplayNode()
-    {
-        Debug.Log(key + " ");
-    }
+}
+
+public interface IDataTypeHelper
+{
+    int ID { get; }
+    string Name { get; }
 }
