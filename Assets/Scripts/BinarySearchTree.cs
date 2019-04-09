@@ -173,8 +173,6 @@ namespace Assets.Scripts
             {
                 if (item.ID == element.ID)
                 {
-                    Debug.Log(item.ID+"id item is");
-                    Debug.Log(element.ID + "id element is");
                     return index;
                 }
                 index++;
@@ -185,14 +183,7 @@ namespace Assets.Scripts
         {
             var temp = new List<T>();
             this.ToList(temp);
-            foreach (var item in temp)
-            {
-                Debug.Log(item + "temp is");
-            }
-                Debug.Log(element + "element is");
-            Debug.Log(FindIndexOfElementInList(temp, element) + "here is");
-            temp.RemoveAt(FindIndexOfElementInList(temp, element));
-            
+            temp.RemoveAt(FindIndexOfElementInList(temp, element)); 
             return BinarySearchTree<T>.FromList(temp);
            
         }

@@ -11,32 +11,5 @@
                 }
             ]
         }
-    ],
-    "ProductList": [
-        {
-            "IdProduct": -502500736,
-            "ProductQuantity": 2,
-            "ProductName": "book"
-        },
-        {
-            "IdProduct": -459686272,
-            "ProductQuantity": 10,
-            "ProductName": "car"
-        },
-        {
-            "IdProduct": -393883136,
-            "ProductQuantity": 3,
-            "ProductName": "table"
-        },
-        {
-            "IdProduct": -151525120,
-            "ProductQuantity": 4,
-            "ProductName": "apple"
-        },
-        {
-            "IdProduct": 1,
-            "ProductQuantity": 2,
-            "ProductName": "Phone"
-        }
     ]
 }

@@ -18,10 +18,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private InputField inputCustomerName;
     private BinarySearchTree<Product> bst;
-
+    private BinarySearchTree<Order> bstOrder;
     private JsonUtils utils;
     private int numberField;
-
+    
 
     public Text obj;
     public Transform parent;
@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
         updateQuantity.text = "0";
         utils = new JsonUtils();
         bst = BinarySearchTree<Product>.FromList(utils.GetProductList());
+        bstOrder = BinarySearchTree<Order>.FromList(utils.GetOrderList());
         ShowProducts();
     }
 
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
         {
             obj.text = item.ProductName + "    Q: " + item.ProductQuantity;
             var prod = Instantiate(obj, parent);
+            
             var onClick = prod.GetComponent<ClickScript>();
             onClick.myObject = panel;
             onClick.myText = item.ProductName;
@@ -55,7 +57,22 @@ public class UIManager : MonoBehaviour
 
         }
     }
+    public void ShowClients()
+    {
+        Debug.Log("Clients");
+        var orders = new List<Order>();
+        bstOrder.ToList(orders);
+        foreach (var item in orders)
+        {
+            Debug.Log(item.ClientName + "---" + item.OrderId );
 
+            foreach (var item2 in item.OrderElements)
+            {
+                Debug.Log(item2.ProductName);
+            }
+        }
+       
+    }
     private void ClearList()
     {
         foreach (Transform item in parent)
@@ -110,8 +127,6 @@ public class UIManager : MonoBehaviour
     {
         var itemToDelete = bst.FindNode(productNameTextOnPanel.text);
        Debug.Log(itemToDelete.value);
-       //Debug.Log(itemToDelete.value.ProductQuantity);
-       //Debug.Log(itemToDelete.value.ProductName);
       bst = bst.Delete(itemToDelete.value);
        SaveElementsToJson();
     }
