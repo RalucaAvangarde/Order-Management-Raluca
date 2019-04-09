@@ -18,10 +18,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private InputField inputCustomerName;
     private BinarySearchTree<Product> bst;
-    private BinarySearchTree<Order> bstOrder;
+    private BinarySearchTree<Order> bstOrder; 
     private JsonUtils utils;
     private int numberField;
-    
+
+    [SerializeField]
+    private GameObject OrdersObj;
+    [SerializeField]
+    private Transform parentOrders;
+    private Text clientName;
+    private Text productName;
+    private Text quantity;
 
     public Text obj;
     public Transform parent;
@@ -47,18 +54,18 @@ public class UIManager : MonoBehaviour
         {
             obj.text = item.ProductName + "    Q: " + item.ProductQuantity;
             var prod = Instantiate(obj, parent);
-            
             var onClick = prod.GetComponent<ClickScript>();
             onClick.myObject = panel;
             onClick.myText = item.ProductName;
             Debug.Log(item.ProductName);
             onClick.productName = productNameTextOnPanel;
             onClick.productName.text = item.ProductName;
-
+            //ClearFields();
         }
     }
     public void ShowClients()
     {
+      
         Debug.Log("Clients");
         var orders = new List<Order>();
         bstOrder.ToList(orders);
@@ -68,6 +75,7 @@ public class UIManager : MonoBehaviour
 
             foreach (var item2 in item.OrderElements)
             {
+                Instantiate(OrdersObj, parentOrders);
                 Debug.Log(item2.ProductName);
             }
         }
@@ -105,7 +113,38 @@ public class UIManager : MonoBehaviour
             ClearFields();
         }
     }
-    //save to  json
+    //Create order for Clients and save it to Json
+    public void AddOrder()
+    {
+        if (bstOrder.FindNode(inputCustomerName.text) == null)
+        {
+            var order = new Order();
+            order.ClientName = inputCustomerName.text;
+            order.OrderId = order.GetHashCode();
+            Debug.Log(order.OrderId + " Id Order is");
+            order.OrderElements = new List<Product>();
+            var prod = bst.FindNode(productNameTextOnPanel.text).value;
+            prod.ProductQuantity = int.Parse(updateQuantity.text);
+            order.OrderElements.Add(prod);
+            bstOrder.AddNode(order);
+            SaveOrdersToJson();
+        }
+        else 
+        
+        {
+            var orderToUpdate = bstOrder.FindNode(inputCustomerName.text);
+            var productToAdd = bst.FindNode(productNameTextOnPanel.text).value;
+            productToAdd.ProductQuantity = int.Parse(updateQuantity.text);
+            orderToUpdate.value.OrderElements.Add(productToAdd);
+
+            bstOrder.UpdateValue(orderToUpdate.value);
+
+            SaveOrdersToJson();
+
+        }
+        
+    }
+    //save products to  json
     private void SaveElementsToJson()
     {
         var prodList = new List<Product>();
@@ -113,13 +152,23 @@ public class UIManager : MonoBehaviour
         JsonUtils.DefaultElements.ProductList = prodList;
         utils.SaveData();
     }
+    //save orders to list
+    private void SaveOrdersToJson()
+    {
+        var orderList = new List<Order>();
+        bstOrder.ToList(orderList);
+        JsonUtils.DefaultOrderElements.ElementsOrder = orderList;
+        utils.SaveOrderData();
+    }
     public void UpdateElement()
     {
 
         var itemToUpdate = bst.FindNode(productNameTextOnPanel.text);
+        Debug.Log(itemToUpdate.value.IdProduct);
         itemToUpdate.value.ProductQuantity = int.Parse(updateQuantity.text);
         bst.UpdateValue(itemToUpdate.value);
         SaveElementsToJson();
+       
 
     }
     //Delete product
@@ -127,7 +176,7 @@ public class UIManager : MonoBehaviour
     {
         var itemToDelete = bst.FindNode(productNameTextOnPanel.text);
        Debug.Log(itemToDelete.value);
-      bst = bst.Delete(itemToDelete.value);
+       bst = bst.Delete(itemToDelete.value);
        SaveElementsToJson();
     }
     
@@ -167,6 +216,7 @@ public class UIManager : MonoBehaviour
 
     private void ClearFields()
     {
+        //productNameTextOnPanel.text = "";
         inputName.text = "";
         inputQuantity.text = "0";
         updateQuantity.text = "0";
