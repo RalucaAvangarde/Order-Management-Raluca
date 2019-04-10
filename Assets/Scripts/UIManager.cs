@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private InventoryElements entryPrefab;
     private List<InventoryElements> entryElemList = new List<InventoryElements>();
-   
 
     [SerializeField]
     private InputField inputName;
@@ -49,23 +48,10 @@ public class UIManager : MonoBehaviour
     // display products with their quantities
     public void ShowProducts()
     {
-        ClearList();
+        ClearList(parent);
         var products = new List<Product>();
         bst.ToList(products);
-       // ShowProducts(products, parent);
-
-        foreach (var item in products)
-        {
-            InventoryElements elem = Instantiate(entryPrefab);
-            elem.SetValues(item.ProductName, item.ProductQuantity.ToString(), ShowPanel);
-            elem.transform.parent = parent;
-           
-            entryElemList.Add(elem);
-            
-        }
-        //force update canvas to reposition elements in UI and rebuild layouts
-        LayoutRebuilder.ForceRebuildLayoutImmediate(parent.GetComponent<RectTransform>());
-        Canvas.ForceUpdateCanvases();
+        ShowProducts(products, parent);
 
     }
     private void ShowPanel(InventoryElements element)
@@ -73,22 +59,22 @@ public class UIManager : MonoBehaviour
         panel.SetActive(true);
         productNameTextOnPanel.text = element.productText.text;
     }
+
     public void ShowProducts(List<Product> listOfProducts, Transform parentContainer)
     {
-        // ClearList();
         foreach (var item in listOfProducts)
-         {
-              obj.text = item.ProductName + " ->   Q: " + item.ProductQuantity;
-             var prod = Instantiate(obj, parentContainer);
-             var onClick = prod.GetComponent<ClickScript>();
-             onClick.myObject = panel;
-             onClick.MyNameText = item.ProductName;
-             Debug.Log(item.ProductName);
-             onClick.productName = productNameTextOnPanel;
-             onClick.productName.text = item.ProductName;
-             //ClearFields();
-         }
+        {
+            InventoryElements elem = Instantiate(entryPrefab);
+            elem.SetValues(item.ProductName, item.ProductQuantity.ToString(), ShowPanel);
+            elem.transform.parent = parentContainer;
+            entryElemList.Add(elem);
+
+        }
+        //force update canvas to reposition elements in UI and rebuild layouts
+        LayoutRebuilder.ForceRebuildLayoutImmediate(parent.GetComponent<RectTransform>());
+        Canvas.ForceUpdateCanvases();
     }
+
     public void ShowClients()
     {
       
@@ -117,9 +103,9 @@ public class UIManager : MonoBehaviour
         panelOrders.gameObject.SetActive(true);
     }
     //clean old entries
-    private void ClearList()
+    private void ClearList(Transform itemContainer)
     {
-        foreach (Transform item in parent)
+        foreach (Transform item in itemContainer)
         {
             Destroy(item.gameObject);
         }
