@@ -7,7 +7,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
+    [SerializeField]
+    private InventoryElements entryPrefab;
+    private List<InventoryElements> entryElemList = new List<InventoryElements>();
+   
 
     [SerializeField]
     private InputField inputName;
@@ -28,42 +31,63 @@ public class UIManager : MonoBehaviour
     private Transform parentOrders;
     [SerializeField]
     private GameObject panelOrders;
-    private Text clientName;
-    private Text productName;
-    private Text quantity;
     
     public Text obj;
     public Transform parent;
     public GameObject panel;
     public Text productNameTextOnPanel;
+
     void Start()
     {
-        numberField = 1;
-        inputQuantity.text = "0";
-        updateQuantity.text = "0";
+        SetInputValues();
         utils = new JsonUtils();
         bst = BinarySearchTree<Product>.FromList(utils.GetProductList());
         bstOrder = BinarySearchTree<Order>.FromList(utils.GetOrderList());
         ShowProducts();
     }
 
+    // display products with their quantities
     public void ShowProducts()
     {
         ClearList();
         var products = new List<Product>();
         bst.ToList(products);
+       // ShowProducts(products, parent);
+
         foreach (var item in products)
         {
-            obj.text = item.ProductName + "    Q: " + item.ProductQuantity;
-            var prod = Instantiate(obj, parent);
-            var onClick = prod.GetComponent<ClickScript>();
-            onClick.myObject = panel;
-            onClick.myText = item.ProductName;
-            Debug.Log(item.ProductName);
-            onClick.productName = productNameTextOnPanel;
-            onClick.productName.text = item.ProductName;
-            //ClearFields();
+            InventoryElements elem = Instantiate(entryPrefab);
+            elem.SetValues(item.ProductName, item.ProductQuantity.ToString(), ShowPanel);
+            elem.transform.parent = parent;
+           
+            entryElemList.Add(elem);
+            
         }
+        //force update canvas to reposition elements in UI and rebuild layouts
+        LayoutRebuilder.ForceRebuildLayoutImmediate(parent.GetComponent<RectTransform>());
+        Canvas.ForceUpdateCanvases();
+
+    }
+    private void ShowPanel(InventoryElements element)
+    {
+        panel.SetActive(true);
+        productNameTextOnPanel.text = element.productText.text;
+    }
+    public void ShowProducts(List<Product> listOfProducts, Transform parentContainer)
+    {
+        // ClearList();
+        foreach (var item in listOfProducts)
+         {
+              obj.text = item.ProductName + " ->   Q: " + item.ProductQuantity;
+             var prod = Instantiate(obj, parentContainer);
+             var onClick = prod.GetComponent<ClickScript>();
+             onClick.myObject = panel;
+             onClick.MyNameText = item.ProductName;
+             Debug.Log(item.ProductName);
+             onClick.productName = productNameTextOnPanel;
+             onClick.productName.text = item.ProductName;
+             //ClearFields();
+         }
     }
     public void ShowClients()
     {
@@ -78,10 +102,8 @@ public class UIManager : MonoBehaviour
             textObj.text = item.ClientName;
            var btn= Instantiate(OrdersObj, parentOrders);
             SetListener(btn);
-            foreach (var item2 in item.OrderElements)
-            {
-              Debug.Log(item2.ProductName);
-            }
+            ShowProducts(item.OrderElements, parentOrders);
+            
         }
        
     }
@@ -94,6 +116,7 @@ public class UIManager : MonoBehaviour
     {
         panelOrders.gameObject.SetActive(true);
     }
+    //clean old entries
     private void ClearList()
     {
         foreach (Transform item in parent)
@@ -231,6 +254,13 @@ public class UIManager : MonoBehaviour
     {
         //productNameTextOnPanel.text = "";
         inputName.text = "";
+        inputQuantity.text = "0";
+        updateQuantity.text = "0";
+    }
+
+    private void SetInputValues()
+    {
+        numberField = 1;
         inputQuantity.text = "0";
         updateQuantity.text = "0";
     }
