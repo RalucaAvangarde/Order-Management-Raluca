@@ -23,13 +23,15 @@ public class UIManager : MonoBehaviour
     private int numberField;
 
     [SerializeField]
-    private GameObject OrdersObj;
+    private Button OrdersObj;
     [SerializeField]
     private Transform parentOrders;
+    [SerializeField]
+    private GameObject panelOrders;
     private Text clientName;
     private Text productName;
     private Text quantity;
-
+    
     public Text obj;
     public Transform parent;
     public GameObject panel;
@@ -72,14 +74,25 @@ public class UIManager : MonoBehaviour
         foreach (var item in orders)
         {
             Debug.Log(item.ClientName + "---" + item.OrderId );
-
+            var textObj = OrdersObj.GetComponentInChildren<Text>();
+            textObj.text = item.ClientName;
+           var btn= Instantiate(OrdersObj, parentOrders);
+            SetListener(btn);
             foreach (var item2 in item.OrderElements)
             {
-                Instantiate(OrdersObj, parentOrders);
-                Debug.Log(item2.ProductName);
+              Debug.Log(item2.ProductName);
             }
         }
        
+    }
+    private void SetListener(Button b)
+    {
+        b.onClick.AddListener(() => { DisplayPanel(); });
+
+    }
+    private void DisplayPanel()
+    {
+        panelOrders.gameObject.SetActive(true);
     }
     private void ClearList()
     {
