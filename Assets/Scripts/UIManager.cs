@@ -156,11 +156,12 @@ public class UIManager : MonoBehaviour
                
                 order.OrderElements.Add(prod);
                 bstOrder.AddNode(order);
+                SaveOrdersToJson();
                 prod.ProductQuantity = quantityAfterOrder;
                 bst.UpdateValue(prod);
                 SaveElementsToJson();
                
-                SaveOrdersToJson();
+                
                 ShowProducts();
             }
             else
@@ -178,10 +179,12 @@ public class UIManager : MonoBehaviour
                 orderToUpdate.value.OrderElements.Add(prod);
 
                 bstOrder.UpdateValue(orderToUpdate.value);
+                SaveOrdersToJson();
+
                 prod.ProductQuantity = quantityAfterOrder;
                 bst.UpdateValue(prod);
                 SaveElementsToJson();
-                SaveOrdersToJson();
+               
                 ShowProducts();
             }
             else
