@@ -11,13 +11,6 @@ public class JsonUtils : MonoBehaviour
     private string fileOrder = "OrdersFile.json";
 
 
-    //private void Awake()
-    //{
-    //    DefaultElements = new OrderData();
-    //    jsonFilePath = fileName;//Application.persistentDataPath + "/" + fileName;
-    //    Debug.Log(jsonFilePath);
-    //    //ReadData();
-    //}
     public JsonUtils()
     {
         ReadData();
@@ -38,7 +31,6 @@ public class JsonUtils : MonoBehaviour
     {
         string contents = JsonUtility.ToJson(DefaultElements, true);
         File.WriteAllText(jsonFilePath, contents);
-        // Resources.Load - for json file
     }
     public void SaveOrderData()
     {
@@ -75,14 +67,8 @@ public class JsonUtils : MonoBehaviour
         }
         else
         {
-           // var temp = new ProductData();
-           // temp.ProductList = new List<Product>();
-           // temp.ProductList = new List<Product>();
-           // temp.ProductList.Add(new Product() { IdProduct = 1, ProductName = "Phone", ProductQuantity = 1 });
-           // Debug.Log("Unable to read default input file");
             var prod = new OrderData();
             prod.ElementsOrder = new List<Order>();
-            //prod.ElementsOrder.Add(new Order() { OrderId = 1, ClientName = "Raluca", OrderElements = temp.ProductList });
             DefaultOrderElements = prod;
             SaveOrderData();
         }
@@ -91,7 +77,6 @@ public class JsonUtils : MonoBehaviour
     public void EmptyOrders()
     {
         DefaultOrderElements.ElementsOrder = null;
-        SaveOrderData();
-        //File.Delete(fileOrder);
+        SaveOrderData(); 
     }
 }

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,25 +17,28 @@ public class UIManager : MonoBehaviour
     private InputField updateQuantity;
     [SerializeField]
     private InputField inputCustomerName;
+
     private BinarySearchTree<Product> bst;
     private BinarySearchTree<Order> bstOrder; 
     private JsonUtils utils;
-    private int numberField;
+    
 
     [SerializeField]
     private Button OrdersObj;
     [SerializeField]
     private Transform parentOrders;
     [SerializeField]
+    private Transform parentProducts;
+    [SerializeField]
     private GameObject panelOrders;
-    
-    public Text obj;
-    public Transform parent;
-    public GameObject panel;
-    public Text productNameTextOnPanel;
-
+    [SerializeField]
+    private GameObject panel;
+    [SerializeField]
+    private Text productNameTextOnPanel;
     [SerializeField]
     private Text orderTextMessage;
+    private int numberField;
+
     void Start()
     {
         SetInputValues();
@@ -49,10 +51,10 @@ public class UIManager : MonoBehaviour
     // display products with their quantities
     public void ShowProducts()
     {
-        ClearList(parent);
+        ClearList(parentProducts);
         var products = new List<Product>();
         bst.ToList(products);
-        ShowProducts(products, parent);
+        ShowProducts(products, parentProducts);
 
     }
     private void ShowPanel(InventoryElements element)
@@ -66,14 +68,13 @@ public class UIManager : MonoBehaviour
         foreach (var item in listOfProducts)
         {
             InventoryElements elem = Instantiate(entryPrefab);
-            Debug.LogError(item.ProductQuantity);
             elem.SetValues(item.ProductName, item.ProductQuantity.ToString(), ShowPanel);
             elem.transform.parent = parentContainer;
             entryElemList.Add(elem);
 
         }
         //force update canvas to reposition elements in UI and rebuild layouts
-        LayoutRebuilder.ForceRebuildLayoutImmediate(parent.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(parentProducts.GetComponent<RectTransform>());
         Canvas.ForceUpdateCanvases();
     }
 
@@ -91,22 +92,17 @@ public class UIManager : MonoBehaviour
                 var textObj = OrdersObj.GetComponentInChildren<Text>();
                 textObj.text = item.ClientName;
                 var btn = Instantiate(OrdersObj, parentOrders);
-                SetListener(btn);
                 ShowProducts(item.OrderElements, parentOrders);
 
             }
         }
         catch (Exception)
         {
-            Debug.LogError("Client error");
+            DisplayPanel();
         }
        
     }
-    private void SetListener(Button b)
-    {
-        b.onClick.AddListener(() => { DisplayPanel(); });
-
-    }
+   
     private void DisplayPanel()
     {
         panelOrders.gameObject.SetActive(true);
@@ -198,8 +194,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                orderTextMessage.text = "Quantity is too big";
-                Debug.LogError("Invalid Quantity2!");
+                orderTextMessage.text = "Quantity is too big";      
             }
 
         }
@@ -225,7 +220,6 @@ public class UIManager : MonoBehaviour
     {
 
         var itemToUpdate = bst.FindNode(productNameTextOnPanel.text);
-        Debug.Log(itemToUpdate.value.IdProduct);
         itemToUpdate.value.ProductQuantity = int.Parse(updateQuantity.text);
         bst.UpdateValue(itemToUpdate.value);
         SaveElementsToJson();
@@ -246,7 +240,7 @@ public class UIManager : MonoBehaviour
     {
         utils.EmptyOrders();
         bstOrder = new BinarySearchTree<Order>();
-        ShowClients();
+        //ShowClients();
         Debug.Log("Delete orders");
     }
     public void Quantity(int operation, InputField input)
@@ -291,18 +285,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // clean order list view
     public void ClearClientsView()
     {
         ClearList(parentOrders);
     }
+
+    //clean inputFields
     private void ClearFields()
     {
-        //productNameTextOnPanel.text = "";
         inputName.text = "";
         inputQuantity.text = "0";
         updateQuantity.text = "0";
     }
 
+    //Set start values for input fields
     private void SetInputValues()
     {
         numberField = 1;

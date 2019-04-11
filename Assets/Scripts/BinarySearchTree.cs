@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts
-{
     class BinarySearchTree<T> where T : IDataTypeHelper
     {
         public Node<T> root { get; set; }
-        public static int Length { get; set; }
+      
         public void AddNode(T valueToBeInserted)
         {
             if (root == null)
@@ -21,7 +15,7 @@ namespace Assets.Scripts
             {
                 AddNode(valueToBeInserted, root);
             }
-            Length++;
+         
         }
 
         private void AddNode(T valueToBeInserted, Node<T> current)
@@ -192,4 +186,4 @@ namespace Assets.Scripts
         }
 
     }
-}
+
