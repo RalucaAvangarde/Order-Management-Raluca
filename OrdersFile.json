@@ -1,0 +1,26 @@
+{
+    "ElementsOrder": [
+        {
+            "OrderId": -898147712,
+            "ClientName": "Popescu",
+            "OrderElements": [
+                {
+                    "IdProduct": -691317248,
+                    "ProductQuantity": 1,
+                    "ProductName": "tv"
+                }
+            ]
+        },
+        {
+            "OrderId": 1,
+            "ClientName": "Raluca",
+            "OrderElements": [
+                {
+                    "IdProduct": 1,
+                    "ProductQuantity": 1,
+                    "ProductName": "Phone"
+                }
+            ]
+        }
+    ]
+}

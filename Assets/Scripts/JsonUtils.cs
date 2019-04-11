@@ -8,7 +8,7 @@ public class JsonUtils : MonoBehaviour
     public static OrderData DefaultOrderElements { get; set; }
     public static ProductData DefaultElements { get; set; }
     private string jsonFilePath = "Products.json";
-    private string fileOrder = "Orders.json";
+    private string fileOrder = "OrdersFile.json";
 
 
     //private void Awake()
@@ -88,4 +88,9 @@ public class JsonUtils : MonoBehaviour
         }
     }
 
+    public void EmptyOrders()
+    {
+        DefaultOrderElements.ElementsOrder = null;
+        SaveOrderData();
+    }
 }

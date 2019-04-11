@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
     public GameObject panel;
     public Text productNameTextOnPanel;
 
+    [SerializeField]
+    private Text orderTextMessage;
     void Start()
     {
         SetInputValues();
@@ -77,7 +79,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowClients()
     {
-      
+        ClearList(parentOrders);
         Debug.Log("Clients");
         var orders = new List<Order>();
         bstOrder.ToList(orders);
@@ -102,15 +104,7 @@ public class UIManager : MonoBehaviour
     {
         panelOrders.gameObject.SetActive(true);
     }
-    //clean old entries
-    private void ClearList(Transform itemContainer)
-    {
-        foreach (Transform item in itemContainer)
-        {
-            Destroy(item.gameObject);
-        }
-    }
-
+   
     public void TemplAfis()
     {
 
@@ -147,6 +141,7 @@ public class UIManager : MonoBehaviour
         {
             if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
             {
+                orderTextMessage.text = "Order was succesfuly created";
                 prod.ProductQuantity = int.Parse(updateQuantity.text);
                 var order = new Order();
                 order.ClientName = inputCustomerName.text;
@@ -166,7 +161,9 @@ public class UIManager : MonoBehaviour
             }
             else
             {
+                orderTextMessage.text = "Quantity is too big";
                 Debug.LogError("Invalid Quantity!");
+               
             }
 
         }
@@ -174,6 +171,7 @@ public class UIManager : MonoBehaviour
         {
             if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
             {
+                orderTextMessage.text = "Order was succesfuly created";
                 prod.ProductQuantity = int.Parse(updateQuantity.text);
                 var orderToUpdate = bstOrder.FindNode(inputCustomerName.text);
                 orderToUpdate.value.OrderElements.Add(prod);
@@ -189,6 +187,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
+                orderTextMessage.text = "Quantity is too big";
                 Debug.LogError("Invalid Quantity2!");
             }
 
@@ -230,7 +229,17 @@ public class UIManager : MonoBehaviour
        bst = bst.Delete(itemToDelete.value);
        SaveElementsToJson();
     }
-    
+
+    //Delete orders
+    public void DeleteOrders()
+    {
+       
+        utils.EmptyOrders();
+       
+       // SaveOrdersToJson();
+        ShowClients();
+        Debug.Log("Delete orders");
+    }
     public void Quantity(int operation, InputField input)
     {
 
@@ -264,6 +273,14 @@ public class UIManager : MonoBehaviour
         Quantity(operation, updateQuantity);
     }
 
+    //clean old entries
+    private void ClearList(Transform itemContainer)
+    {
+        foreach (Transform item in itemContainer)
+        {
+            Destroy(item.gameObject);
+        }
+    }
 
     private void ClearFields()
     {
