@@ -7197,7 +7197,7 @@ GameObject:
   - component: {fileID: 1890643724}
   - component: {fileID: 1890643723}
   m_Layer: 5
-  m_Name: ManagePanel
+  m_Name: TextOrdersPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

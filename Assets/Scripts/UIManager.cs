@@ -48,7 +48,9 @@ public class UIManager : MonoBehaviour
         ShowProducts();
     }
 
-    // display products with their quantities
+    /// <summary>
+    /// display products with their quantities into a scroll view
+    /// </summary>
     public void ShowProducts()
     {
         ClearList(parentProducts);
@@ -77,7 +79,9 @@ public class UIManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(parentProducts.GetComponent<RectTransform>());
         Canvas.ForceUpdateCanvases();
     }
-
+    /// <summary>
+    /// show clients and their orders into a scroll view when click on "View Orders" button
+    /// </summary>
     public void ShowClients()
     {
         try
@@ -103,25 +107,17 @@ public class UIManager : MonoBehaviour
         }
        
     }
-   
+   /// <summary>
+   /// Display a pop-up with a message when order list is empty
+   /// </summary>
     private void DisplayPanel()
     {
         panelOrders.gameObject.SetActive(true);
     }
    
-    public void TemplAfis()
-    {
-
-        bst.recursiveInorder(bst.root);
-        var listFromBst = new List<Product>();
-        bst.ToList(listFromBst);
-        foreach (var item in listFromBst)
-        {
-            Debug.Log("From list: " + item.ProductName + "--" + item.ProductQuantity);
-        }
-        Debug.Log("Found: " + bst.FindNode("Phone").value.ToString());
-    }
-
+    /// <summary>
+    /// Add product with name and quantity, to Product list, save it to Json
+    /// </summary>
     public void AddElement()
     {
         if (!string.IsNullOrEmpty(inputName.text))
@@ -133,7 +129,10 @@ public class UIManager : MonoBehaviour
             ClearFields();
         }
     }
-    //Create order for Clients and save it to Json
+   
+    /// <summary>
+    /// Create order for Clients and save it to Json, when press on "AddToOrder" button
+    /// </summary>
     public void AddOrder()
     {
         var prod = bst.FindNode(productNameTextOnPanel.text).value;
@@ -201,7 +200,10 @@ public class UIManager : MonoBehaviour
         }
 
     }
-    //save products to  json
+
+    /// <summary>
+    /// save products to  json
+    /// </summary>
     private void SaveElementsToJson()
     {
         var prodList = new List<Product>();
@@ -209,7 +211,10 @@ public class UIManager : MonoBehaviour
         JsonUtils.DefaultElements.ProductList = prodList;
         utils.SaveData();
     }
-    //save orders to list
+    
+    /// <summary>
+    /// save orders to json 
+    /// </summary>
     private void SaveOrdersToJson()
     {
         var orderList = new List<Order>();
@@ -227,7 +232,10 @@ public class UIManager : MonoBehaviour
        
 
     }
-    //Delete product
+   
+    /// <summary>
+    /// Delete a product from inventory when click on Delete button 
+    /// </summary>
     public void DeleteElement()
     {
         var itemToDelete = bst.FindNode(productNameTextOnPanel.text);
@@ -236,7 +244,10 @@ public class UIManager : MonoBehaviour
        SaveElementsToJson();
     }
 
-    //Delete orders
+  
+    /// <summary>
+    /// Delete orders when click on Proceed button
+    /// </summary>
     public void DeleteOrders()
     {
         utils.EmptyOrders();
@@ -244,6 +255,12 @@ public class UIManager : MonoBehaviour
         //ShowClients();
         Debug.Log("Delete orders");
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <param name="input"></param>
     public void Quantity(int operation, InputField input)
     {
 
@@ -265,19 +282,31 @@ public class UIManager : MonoBehaviour
         }
 
     }
-    //add quantity
+  
+    /// <summary>
+    /// add quantity for a product
+    /// </summary>
+    /// <param name="operation"></param>
     public void AddQuantity(int operation)
     {
         Quantity(operation, inputQuantity);
     }
 
-    //update quantity
+
+    /// <summary>
+    /// update quantity for a product
+    /// </summary>
+    /// <param name="operation"></param>
     public void UpdateQuantity(int operation)
     {
         Quantity(operation, updateQuantity);
     }
 
-    //clean old entries
+  
+    /// <summary>
+    /// clean old entries
+    /// </summary>
+    /// <param name="itemContainer"></param>
     private void ClearList(Transform itemContainer)
     {
         foreach (Transform item in itemContainer)
@@ -286,21 +315,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // clean order list view
+    /// <summary>
+    /// clean order list view
+    /// </summary>
     public void ClearClientsView()
     {
         ClearList(parentOrders);
     }
 
-    //clean inputFields
+    /// <summary>
+    /// clean inputFields
+    /// </summary>
     private void ClearFields()
     {
         inputName.text = "";
         inputQuantity.text = "0";
         updateQuantity.text = "0";
     }
-
-    //Set start values for input fields
+    /// <summary>
+    /// Set start values for input fields
+    /// </summary>
     private void SetInputValues()
     {
         numberField = 1;
