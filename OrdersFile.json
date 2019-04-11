@@ -1,29 +1,13 @@
 {
     "ElementsOrder": [
         {
-            "OrderId": -977209600,
-            "ClientName": "Georgescu",
-            "OrderElements": [
-                {
-                    "IdProduct": -691317248,
-                    "ProductQuantity": 2,
-                    "ProductName": "tv"
-                }
-            ]
-        },
-        {
-            "OrderId": 867166464,
-            "ClientName": "Popescu",
+            "OrderId": -919280640,
+            "ClientName": "gdfg",
             "OrderElements": [
                 {
                     "IdProduct": -1321113344,
                     "ProductQuantity": 1,
                     "ProductName": "laptop"
-                },
-                {
-                    "IdProduct": 1,
-                    "ProductQuantity": 1,
-                    "ProductName": "Phone"
                 }
             ]
         }

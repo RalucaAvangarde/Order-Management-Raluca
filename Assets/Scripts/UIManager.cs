@@ -66,6 +66,7 @@ public class UIManager : MonoBehaviour
         foreach (var item in listOfProducts)
         {
             InventoryElements elem = Instantiate(entryPrefab);
+            Debug.LogError(item.ProductQuantity);
             elem.SetValues(item.ProductName, item.ProductQuantity.ToString(), ShowPanel);
             elem.transform.parent = parentContainer;
             entryElemList.Add(elem);
@@ -148,17 +149,23 @@ public class UIManager : MonoBehaviour
             if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
             {
                 orderTextMessage.text = "Order was succesfuly created";
-                prod.ProductQuantity = int.Parse(updateQuantity.text);
+                prod.ProductQuantity = quantityAfterOrder;
                 var order = new Order();
                 order.ClientName = inputCustomerName.text;
                 order.OrderId = order.GetHashCode();
-                Debug.Log(order.OrderId + " Id Order is");
                 order.OrderElements = new List<Product>();
-               
-                order.OrderElements.Add(prod);
+                Debug.Log(prod.ProductQuantity + " prod1");
+
+                Product newProduct = new Product();
+                newProduct.ProductQuantity = int.Parse(updateQuantity.text);
+                newProduct.ProductName = prod.ProductName;
+                newProduct.IdProduct = prod.IdProduct;
+
+
+                order.OrderElements.Add(newProduct);
                 bstOrder.AddNode(order);
                 SaveOrdersToJson();
-                prod.ProductQuantity = quantityAfterOrder;
+          
                 bst.UpdateValue(prod);
                 SaveElementsToJson();
                 ShowProducts();
@@ -238,6 +245,7 @@ public class UIManager : MonoBehaviour
     public void DeleteOrders()
     {
         utils.EmptyOrders();
+        bstOrder = new BinarySearchTree<Order>();
         ShowClients();
         Debug.Log("Delete orders");
     }
@@ -283,6 +291,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ClearClientsView()
+    {
+        ClearList(parentOrders);
+    }
     private void ClearFields()
     {
         //productNameTextOnPanel.text = "";
