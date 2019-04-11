@@ -13,6 +13,22 @@
                     "IdProduct": 1346409216,
                     "ProductQuantity": 2,
                     "ProductName": "coffe"
+                },
+                {
+                    "IdProduct": -722760064,
+                    "ProductQuantity": 2,
+                    "ProductName": "pen"
+                }
+            ]
+        },
+        {
+            "OrderId": -1396358528,
+            "ClientName": "Calinescu",
+            "OrderElements": [
+                {
+                    "IdProduct": 1,
+                    "ProductQuantity": 38,
+                    "ProductName": "Phone"
                 }
             ]
         },
@@ -24,6 +40,11 @@
                     "IdProduct": 1,
                     "ProductQuantity": 1,
                     "ProductName": "Phone"
+                },
+                {
+                    "IdProduct": 2084716032,
+                    "ProductQuantity": 3,
+                    "ProductName": "car"
                 }
             ]
         },

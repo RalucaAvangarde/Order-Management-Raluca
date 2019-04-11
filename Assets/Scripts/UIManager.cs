@@ -138,33 +138,59 @@ public class UIManager : MonoBehaviour
     //Create order for Clients and save it to Json
     public void AddOrder()
     {
+        var prod = bst.FindNode(productNameTextOnPanel.text).value;
+
+        var initialQuantity = prod.ProductQuantity;
+        var quantityAfterOrder = initialQuantity - int.Parse(updateQuantity.text);
+
         if (bstOrder.FindNode(inputCustomerName.text) == null)
         {
-            var order = new Order();
-            order.ClientName = inputCustomerName.text;
-            order.OrderId = order.GetHashCode();
-            Debug.Log(order.OrderId + " Id Order is");
-            order.OrderElements = new List<Product>();
-            var prod = bst.FindNode(productNameTextOnPanel.text).value;
-            prod.ProductQuantity = int.Parse(updateQuantity.text);
-            order.OrderElements.Add(prod);
-            bstOrder.AddNode(order);
-            SaveOrdersToJson();
+            if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
+            {
+                prod.ProductQuantity = int.Parse(updateQuantity.text);
+                var order = new Order();
+                order.ClientName = inputCustomerName.text;
+                order.OrderId = order.GetHashCode();
+                Debug.Log(order.OrderId + " Id Order is");
+                order.OrderElements = new List<Product>();
+               
+                order.OrderElements.Add(prod);
+                bstOrder.AddNode(order);
+                prod.ProductQuantity = quantityAfterOrder;
+                bst.UpdateValue(prod);
+                SaveElementsToJson();
+               
+                SaveOrdersToJson();
+                ShowProducts();
+            }
+            else
+            {
+                Debug.LogError("Invalid Quantity!");
+            }
+
         }
-        else 
-        
+        else
         {
-            var orderToUpdate = bstOrder.FindNode(inputCustomerName.text);
-            var productToAdd = bst.FindNode(productNameTextOnPanel.text).value;
-            productToAdd.ProductQuantity = int.Parse(updateQuantity.text);
-            orderToUpdate.value.OrderElements.Add(productToAdd);
+            if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
+            {
+                prod.ProductQuantity = int.Parse(updateQuantity.text);
+                var orderToUpdate = bstOrder.FindNode(inputCustomerName.text);
+                orderToUpdate.value.OrderElements.Add(prod);
 
-            bstOrder.UpdateValue(orderToUpdate.value);
-
-            SaveOrdersToJson();
+                bstOrder.UpdateValue(orderToUpdate.value);
+                prod.ProductQuantity = quantityAfterOrder;
+                bst.UpdateValue(prod);
+                SaveElementsToJson();
+                SaveOrdersToJson();
+                ShowProducts();
+            }
+            else
+            {
+                Debug.LogError("Invalid Quantity2!");
+            }
 
         }
-        
+
     }
     //save products to  json
     private void SaveElementsToJson()

@@ -17,17 +17,12 @@
         },
         {
             "IdProduct": 1,
-            "ProductQuantity": 3,
+            "ProductQuantity": 30,
             "ProductName": "Phone"
         },
         {
-            "IdProduct": 114838528,
-            "ProductQuantity": 2,
-            "ProductName": "flowers"
-        },
-        {
             "IdProduct": 588908032,
-            "ProductQuantity": 7,
+            "ProductQuantity": 5,
             "ProductName": "book"
         },
         {
@@ -37,7 +32,7 @@
         },
         {
             "IdProduct": 2084716032,
-            "ProductQuantity": 99,
+            "ProductQuantity": 90,
             "ProductName": "car"
         }
     ]

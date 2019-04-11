@@ -7,7 +7,6 @@ public class JsonUtils : MonoBehaviour
 {
     public static OrderData DefaultOrderElements { get; set; }
     public static ProductData DefaultElements { get; set; }
-    //private string fileName = "Orders.json";
     private string jsonFilePath = "Products.json";
     private string fileOrder = "Orders.json";
 
@@ -61,8 +60,6 @@ public class JsonUtils : MonoBehaviour
             var temp = new ProductData();
             temp.ProductList = new List<Product>();
             temp.ProductList.Add(new Product() { IdProduct = 1, ProductName = "Phone", ProductQuantity = 1 });
-            //temp.ElementsOrder = new List<Order>();
-            // temp.ElementsOrder.Add(new Order() { OrderId = 1, ClientName = "Raluca", OrderElements = temp.ProductList });
             DefaultElements = temp;
             SaveData();
         }
