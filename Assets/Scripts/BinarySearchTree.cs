@@ -92,7 +92,10 @@ namespace Assets.Scripts
         }
         private Node<T> FindNode(Node<T> root, string elementName)
         {
-
+            if (root == null)
+            {
+                return null;
+            }
             if (root.left != null)
             {
                 return FindNode(root.left, elementName);

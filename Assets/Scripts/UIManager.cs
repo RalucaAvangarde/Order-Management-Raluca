@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -79,19 +78,26 @@ public class UIManager : MonoBehaviour
 
     public void ShowClients()
     {
-        ClearList(parentOrders);
-        Debug.Log("Clients");
-        var orders = new List<Order>();
-        bstOrder.ToList(orders);
-        foreach (var item in orders)
+        try
         {
-            Debug.Log(item.ClientName + "---" + item.OrderId );
-            var textObj = OrdersObj.GetComponentInChildren<Text>();
-            textObj.text = item.ClientName;
-           var btn= Instantiate(OrdersObj, parentOrders);
-            SetListener(btn);
-            ShowProducts(item.OrderElements, parentOrders);
-            
+            ClearList(parentOrders);
+            Debug.Log("Clients");
+            var orders = new List<Order>();
+            bstOrder.ToList(orders);
+            foreach (var item in orders)
+            {
+                Debug.Log(item.ClientName + "---" + item.OrderId);
+                var textObj = OrdersObj.GetComponentInChildren<Text>();
+                textObj.text = item.ClientName;
+                var btn = Instantiate(OrdersObj, parentOrders);
+                SetListener(btn);
+                ShowProducts(item.OrderElements, parentOrders);
+
+            }
+        }
+        catch (Exception)
+        {
+            Debug.LogError("Client error");
         }
        
     }
@@ -155,8 +161,6 @@ public class UIManager : MonoBehaviour
                 prod.ProductQuantity = quantityAfterOrder;
                 bst.UpdateValue(prod);
                 SaveElementsToJson();
-               
-                
                 ShowProducts();
             }
             else
@@ -233,10 +237,7 @@ public class UIManager : MonoBehaviour
     //Delete orders
     public void DeleteOrders()
     {
-       
         utils.EmptyOrders();
-       
-       // SaveOrdersToJson();
         ShowClients();
         Debug.Log("Delete orders");
     }

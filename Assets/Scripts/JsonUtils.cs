@@ -75,14 +75,14 @@ public class JsonUtils : MonoBehaviour
         }
         else
         {
-            var temp = new ProductData();
-            temp.ProductList = new List<Product>();
-            temp.ProductList = new List<Product>();
-            temp.ProductList.Add(new Product() { IdProduct = 1, ProductName = "Phone", ProductQuantity = 1 });
-            Debug.Log("Unable to read default input file");
+           // var temp = new ProductData();
+           // temp.ProductList = new List<Product>();
+           // temp.ProductList = new List<Product>();
+           // temp.ProductList.Add(new Product() { IdProduct = 1, ProductName = "Phone", ProductQuantity = 1 });
+           // Debug.Log("Unable to read default input file");
             var prod = new OrderData();
             prod.ElementsOrder = new List<Order>();
-            prod.ElementsOrder.Add(new Order() { OrderId = 1, ClientName = "Raluca", OrderElements = temp.ProductList });
+            //prod.ElementsOrder.Add(new Order() { OrderId = 1, ClientName = "Raluca", OrderElements = temp.ProductList });
             DefaultOrderElements = prod;
             SaveOrderData();
         }
@@ -92,5 +92,6 @@ public class JsonUtils : MonoBehaviour
     {
         DefaultOrderElements.ElementsOrder = null;
         SaveOrderData();
+        //File.Delete(fileOrder);
     }
 }
