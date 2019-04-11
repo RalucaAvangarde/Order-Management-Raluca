@@ -82,6 +82,7 @@ public class UIManager : MonoBehaviour
     {
         try
         {
+            bstOrder = BinarySearchTree<Order>.FromList(utils.GetOrderList());
             ClearList(parentOrders);
             Debug.Log("Clients");
             var orders = new List<Order>();
@@ -150,7 +151,7 @@ public class UIManager : MonoBehaviour
                 order.ClientName = inputCustomerName.text;
                 order.OrderId = order.GetHashCode();
                 order.OrderElements = new List<Product>();
-                Debug.Log(prod.ProductQuantity + " prod1");
+                //Debug.Log(prod.ProductQuantity + " prod1");
 
                 Product newProduct = new Product();
                 newProduct.ProductQuantity = int.Parse(updateQuantity.text);
