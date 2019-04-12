@@ -3,7 +3,7 @@ Order management is an application that allows the user to add products to inven
 
 ## Quick start
 
-1.Open app
+1.Open app  
 2.Click “AddProduct” to add a new product with a quantity in inventory.
 
 3.Left click on a product from product stock, will open a pop-up panel. From here user can chose to update the quantity for the product, or delete the product, or can add it to an order, by click on “AddToOrder" button, in this way, a panel will be opened and user can type a client name, after this press “CreateOrder” and an order will be created for that client.
