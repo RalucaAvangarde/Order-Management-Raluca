@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -122,11 +123,23 @@ public class UIManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(inputName.text))
         {
-            var itemToAdd = new Product() { IdProduct = 0, ProductName = inputName.text, ProductQuantity = int.Parse(inputQuantity.text) };
-            itemToAdd.IdProduct = itemToAdd.GetHashCode();
-            bst.AddNode(itemToAdd);
-            SaveElementsToJson();
-            ClearFields();
+            var exists = bst.FindNode(inputName.text);
+            //if product exist already update just quantity
+            if (exists != null)
+            {
+                exists.value.ProductQuantity += int.Parse(inputQuantity.text);
+                bst.UpdateValue(exists.value);
+                SaveElementsToJson();
+                ClearFields();
+            }
+            else
+            {
+                var itemToAdd = new Product() { IdProduct = 0, ProductName = inputName.text, ProductQuantity = int.Parse(inputQuantity.text) };
+                itemToAdd.IdProduct = itemToAdd.GetHashCode();
+                bst.AddNode(itemToAdd);
+                SaveElementsToJson();
+                ClearFields();
+            }
         }
     }
    
@@ -181,21 +194,42 @@ public class UIManager : MonoBehaviour
                 orderTextMessage.text = "Order was succesfuly created";
                 prod.ProductQuantity = int.Parse(updateQuantity.text);
                 var orderToUpdate = bstOrder.FindNode(inputCustomerName.text);
-                orderToUpdate.value.OrderElements.Add(prod);
 
-                bstOrder.UpdateValue(orderToUpdate.value);
+                var updateItemIfExist = new Product();
+                try
+                {
+                    updateItemIfExist = orderToUpdate.value.OrderElements.Where(x => x.ProductName == prod.ProductName).First();
+                }
+                catch (Exception)
+                {
+                    updateItemIfExist = null;
+                }
+
+                if (updateItemIfExist != null)
+                {
+                    updateItemIfExist.ProductQuantity += int.Parse(updateQuantity.text);
+                    bstOrder.UpdateValue(orderToUpdate.value);
+                }
+                else
+                {
+                    orderToUpdate.value.OrderElements.Add(prod);
+
+                    bstOrder.UpdateValue(orderToUpdate.value);
+                }
+
                 SaveOrdersToJson();
 
                 prod.ProductQuantity = quantityAfterOrder;
                 bst.UpdateValue(prod);
                 SaveElementsToJson();
-               
+
                 ShowProducts();
             }
             else
             {
-                orderTextMessage.text = "Quantity is too big";      
+                orderTextMessage.text = "Quantity is too big";
             }
+
 
         }
 
@@ -222,6 +256,9 @@ public class UIManager : MonoBehaviour
         JsonUtils.DefaultOrderElements.ElementsOrder = orderList;
         utils.SaveOrderData();
     }
+/// <summary>
+/// Update quantity for Selected product by pressing "Update" button
+/// </summary>
     public void UpdateElement()
     {
 
@@ -252,7 +289,6 @@ public class UIManager : MonoBehaviour
     {
         utils.EmptyOrders();
         bstOrder = new BinarySearchTree<Order>();
-        //ShowClients();
         Debug.Log("Delete orders");
     }
 

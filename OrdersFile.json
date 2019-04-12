@@ -22,7 +22,7 @@
             "OrderElements": [
                 {
                     "IdProduct": -706596992,
-                    "ProductQuantity": 5,
+                    "ProductQuantity": 7,
                     "ProductName": "mere"
                 }
             ]
@@ -33,13 +33,24 @@
             "OrderElements": [
                 {
                     "IdProduct": -691317248,
-                    "ProductQuantity": 1,
+                    "ProductQuantity": 2,
                     "ProductName": "tv"
                 },
                 {
                     "IdProduct": -1770967168,
                     "ProductQuantity": 1,
                     "ProductName": "pen"
+                }
+            ]
+        },
+        {
+            "OrderId": -178346496,
+            "ClientName": "Mihai",
+            "OrderElements": [
+                {
+                    "IdProduct": -1404368256,
+                    "ProductQuantity": 1,
+                    "ProductName": "table"
                 }
             ]
         },
@@ -54,13 +65,18 @@
                 },
                 {
                     "IdProduct": 588908032,
-                    "ProductQuantity": 1,
+                    "ProductQuantity": 3,
                     "ProductName": "book"
                 },
                 {
                     "IdProduct": 1346409216,
                     "ProductQuantity": 1,
                     "ProductName": "coffe"
+                },
+                {
+                    "IdProduct": 2084716032,
+                    "ProductQuantity": 1,
+                    "ProductName": "car"
                 }
             ]
         }

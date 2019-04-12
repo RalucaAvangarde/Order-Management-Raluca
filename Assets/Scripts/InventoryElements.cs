@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryElements : MonoBehaviour
@@ -13,7 +10,6 @@ public class InventoryElements : MonoBehaviour
     private Text quantityText;
     
 
-
     public void SetValues(string product, string quantity, Action<InventoryElements> showPanel)
     {
         productText.text = product;
@@ -21,7 +17,4 @@ public class InventoryElements : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() => { showPanel(this); });
         
     }
-
-    
-    
 }

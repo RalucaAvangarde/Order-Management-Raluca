@@ -25,6 +25,7 @@ public class Product : IDataTypeHelper
 
     public override string ToString() => "ID: " + IdProduct + " - Name:  " + ProductName + "  - Quantity:  " + ProductQuantity;
 }
+
 [Serializable]
 public class Order : IDataTypeHelper
 {

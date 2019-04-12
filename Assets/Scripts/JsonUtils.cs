@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -15,28 +14,38 @@ public class JsonUtils : MonoBehaviour
     {
         ReadData();
     }
+
     public List<Product> GetProductList()
     {
         ReadData();
         return DefaultElements.ProductList;
     }
-
+   
     public List<Order> GetOrderList()
     {
         ReadOrdersData();
         return DefaultOrderElements.ElementsOrder;
 
     }
+    /// <summary>
+    /// Save data in products file
+    /// </summary>
     public void SaveData()
     {
         string contents = JsonUtility.ToJson(DefaultElements, true);
         File.WriteAllText(jsonFilePath, contents);
     }
+    /// <summary>
+    /// Save data in orders file
+    /// </summary>
     public void SaveOrderData()
     {
         string contents = JsonUtility.ToJson(DefaultOrderElements, true);
         File.WriteAllText(fileOrder, contents);
     }
+    /// <summary>
+    /// Read Product data
+    /// </summary>
     public void ReadData()
     {
 
@@ -56,7 +65,9 @@ public class JsonUtils : MonoBehaviour
             SaveData();
         }
     }
-
+    /// <summary>
+    /// read orders data 
+    /// </summary>
     public void ReadOrdersData()
     {
         if (File.Exists(fileOrder))
@@ -73,7 +84,9 @@ public class JsonUtils : MonoBehaviour
             SaveOrderData();
         }
     }
-
+    /// <summary>
+    /// Delete data from OrdersFile
+    /// </summary>
     public void EmptyOrders()
     {
         DefaultOrderElements.ElementsOrder = null;
