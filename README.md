@@ -4,15 +4,14 @@ Order management is an application that allows the user to add products to inven
 ## Quick start
 
 1.Open app  
-2.Click “AddProduct” to add a new product with a quantity in inventory. 	
-3.Left click on a product from product stock, will open a pop-up panel. From here user can chose to update the quantity for the product, or delete the product, or can add it to an order, by click on “AddToOrder" button, in this way, a panel will be opened and user can type a client name, after this press “CreateOrder” and an order will be created for that client. 	
+2.Click “AddProduct” to add a new product with a quantity in inventory.   
+3.Left click on a product from product stock, will open a pop-up panel. From here user can chose to update the quantity for the product, or delete the product, or can add it to an order, by click on “AddToOrder" button, in this way, a panel will be opened and user can type a client name, after this press “CreateOrder” and an order will be created for that client.	    
 4. Click on “ViewOrders ”, will show to user a list with all clients and their products. From here, by clicking on “Proceed”, all orders will be  processed and the list will be emptied.
 
 ## Datatypes
 
--There are 2 json files in the project that allows the user to save his work from one app session use and reload all data collected and updated when a new session is started.
--These 2 files are named :-> “Products.json”: where all products added to the app will be stored
-                          -> ”Orders.json” : where orders are saved.
+-There are 2 json files in the project that allows the user to save his work from one app session use and reload all data collected and updated when a new session is started.  
+-These 2 files are named : “Products.json”: where all products added to the app will be stored and ”Orders.json” : where orders are saved.
 
 ## DataStructures
 
