@@ -17,8 +17,12 @@ using UnityEngine;
             }
          
         }
-
-        private void AddNode(T valueToBeInserted, Node<T> current)
+    /// <summary>
+    /// add node in tree where key is ID
+    /// </summary>
+    /// <param name="valueToBeInserted"></param>
+    /// <param name="current"></param>
+    private void AddNode(T valueToBeInserted, Node<T> current)
         {
             if (valueToBeInserted.ID < current.value.ID)
             {
@@ -55,6 +59,7 @@ using UnityEngine;
         {
             return FindNode(root, idOFelementTofind);
         }
+
         private Node<T> FindNode(Node<T> root, int idOFelementTofind)
         {
 
@@ -84,7 +89,13 @@ using UnityEngine;
         {
             return FindNode(root, elementName);
         }
-        private Node<T> FindNode(Node<T> root, string elementName)
+    /// <summary>
+    /// find node in tree by a givven Name
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="elementName"></param>
+    /// <returns></returns>
+    private Node<T> FindNode(Node<T> root, string elementName)
         {
             if (root == null)
             {
@@ -110,7 +121,11 @@ using UnityEngine;
         {
             UpdateValue(root, value);
         }
-
+    /// <summary>
+    /// Update a node in tree
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="value"></param>
         private void UpdateValue(Node<T> root, T value)
         {
             if (root == null)
@@ -134,12 +149,17 @@ using UnityEngine;
 
             }
         }
-
+    
         public void ToList(List<T> result)
         {
             ToList(root, result);
         }
-        private void ToList(Node<T> root, List<T> result)
+    /// <summary>
+    ///  Convert tree to list and save  result in "result" list
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="result"></param>
+    private void ToList(Node<T> root, List<T> result)
         {
 
 
@@ -153,7 +173,11 @@ using UnityEngine;
                 ToList(root.right, result);
             }
         }
-
+    /// <summary>
+    /// convert list to bst 
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
         public static BinarySearchTree<T> FromList(List<T> result)
         {
             var tree = new BinarySearchTree<T>();
@@ -176,6 +200,11 @@ using UnityEngine;
             }
             return -1;
         }
+    /// <summary>
+    /// Delete element 
+    /// </summary>
+    /// <param name="element"></param>
+    /// <returns></returns>
         public BinarySearchTree<T> Delete(T element)
         {
             var temp = new List<T>();

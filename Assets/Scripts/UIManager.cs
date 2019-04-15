@@ -121,7 +121,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void AddElement()
     {
-        if (!string.IsNullOrEmpty(inputName.text))
+        if (!string.IsNullOrEmpty(inputName.text) && int.Parse(inputQuantity.text) > 0)
         {
             var exists = bst.FindNode(inputName.text);
             //if product exist already update just quantity
@@ -141,6 +141,10 @@ public class UIManager : MonoBehaviour
                 ClearFields();
             }
         }
+        else
+        {
+            Debug.LogError("Incorrect format");
+        }
     }
    
     /// <summary>
@@ -153,7 +157,7 @@ public class UIManager : MonoBehaviour
         var initialQuantity = prod.ProductQuantity;
         var quantityAfterOrder = initialQuantity - int.Parse(updateQuantity.text);
 
-        if (bstOrder.FindNode(inputCustomerName.text) == null)
+        if (bstOrder.FindNode(inputCustomerName.text) == null )
         {
             if (prod.ProductQuantity >= int.Parse(updateQuantity.text))
             {
@@ -261,13 +265,20 @@ public class UIManager : MonoBehaviour
 /// </summary>
     public void UpdateElement()
     {
+        if (int.Parse(updateQuantity.text) > 0)
+        {
 
-        var itemToUpdate = bst.FindNode(productNameTextOnPanel.text);
-        itemToUpdate.value.ProductQuantity = int.Parse(updateQuantity.text);
-        bst.UpdateValue(itemToUpdate.value);
-        SaveElementsToJson();
-       
 
+            var itemToUpdate = bst.FindNode(productNameTextOnPanel.text);
+            itemToUpdate.value.ProductQuantity = int.Parse(updateQuantity.text);
+            bst.UpdateValue(itemToUpdate.value);
+            SaveElementsToJson();
+
+        }
+        else
+        {
+            Debug.LogError("Quantity can`t be negative!");
+        }
     }
    
     /// <summary>
